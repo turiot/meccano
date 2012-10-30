@@ -3,6 +3,9 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
   
+  <properties>
+    <title>Afterword</title>
+  </properties>
   <body>
     <p>
       This tool doesn't intent to rival EJB or OSGI, it brings only modularity to servlet based applications while others brings many more.

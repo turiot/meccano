@@ -116,6 +116,19 @@
           </reportPlugins>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>0.7</version>
+        <configuration>
+          <message>Creating site for ${project.artifactId}</message>
+          <server>github</server>
+          <repositoryOwner>turiot</repositoryOwner>
+          <repositoryName>meccano</repositoryName>
+          <outputDirectory>${project.build.directory}/staging</outputDirectory>
+          <merge>false</merge>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -140,6 +153,7 @@
     <jdk.fork>false</jdk.fork>
     <jdk.version>${java.specification.version}</jdk.version>
     <jdk.home>${java.home}</jdk.home>
+    <github.global.server>github</github.global.server>
   </properties>
 
   <licenses>

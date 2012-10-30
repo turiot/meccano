@@ -19,4 +19,14 @@
                 
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-site_deploy</actionName>
+            <displayName>site_deploy</displayName>
+            <goals>
+                <goal>ghSite:site</goal>
+                <goal>-X</goal>
+                <goal>-pl</goal>
+                <goal>:bridge</goal>
+            </goals>
+        </action>
     </actions>
