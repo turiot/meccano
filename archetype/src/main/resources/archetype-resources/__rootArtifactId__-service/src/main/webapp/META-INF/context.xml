@@ -1,0 +1,6 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="${version}" encoding="UTF-8"?>
+<Context path="/${parentArtifactId}-service" reloadable="true" antiJARLocking="true" antiResourceLocking="true">
+</Context>
