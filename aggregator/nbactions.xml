@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-integration</actionName>
+            <displayName>integration</displayName>
+            <goals>
+                <goal>verify</goal>
+                <goal>-DskipTests=false</goal>
+                <goal>-pl</goal>
+                <goal>:integration</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-install verify</actionName>
+            <displayName>install verify</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>compile</goal>
+                <goal>verify</goal>
+                <goal>-DskipTests=false</goal>
+            </goals>
+        </action>
+    </actions>

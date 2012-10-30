@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>meccano</groupId>
+  <artifactId>aggregator</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+  <name>meccano</name>
+
+  <modules>
+    <module>../bridge</module>
+    <module>../test1</module>
+    <module>../test2</module>
+    <module>../test3</module>
+    <module>../integration</module>
+    <!--module>../archetype</module-->
+  </modules>
+
+  <!-- 
+    mvn clean install -T4
+    mvn site site:stage 
+    mvn package -am -pl :bridge-tomcat
+    mvn clean compile -pl :bridge-core (default jdk)
+    mvn clean compile -pl :bridge-core -s settings_5.xml
+    mvn clean compile -pl :bridge-core -s settings_7.xml
+    mvn clean install verify -DskipTests=false -s settings.xml
+    mvn archetype:generate -DarchetypeGroupId=meccano -DarchetypeArtifactId=archetype -DarchetypeVersion=1.0 -DgroupId=mygroup -DartifactId=test2 -Dversion=1.0 -Dpackage=mypackage
+  -->
+
+</project>

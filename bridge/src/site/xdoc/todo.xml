@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  
+  <body>
+    <section name="Limitations">
+      <p>This advanced proof of concept is not production battle-tested : feedback welcome !</p>
+      <p>Memory leaks are not yet verified.</p>
+      <p>Shutdown order is not yet implemented</p>
+      <p>You can't redeploy api for the moment (create a new api version).</p>
+      <p>You need some privileges to perform reflection and classloader manipulations (cf security manager).</p>
+      <p>Asynchronism have a design impact on the application startup.</p>
+    </section>
+    <section name="Todo list">
+      <p>Test with jrockit JVM.</p>
+      <p>Make a Jetty version.</p>
+      <p>Make a JEE version.</p>
+      <p>Put bridge-core into Tomcat shared (intrusive but less synchronization work).</p>
+      <p>Create AOP, Spring, Guice and Jodd helpers.</p>
+      <p>Create an Apache Camel example (context sharing without classloading troubles).</p>
+      <p>Better cache management in CompositeLoader lookup.</p>
+      <p>Finer retry configuration.</p>
+      <p>
+        Use MBeans to notify clients of service shutdowns/updates.
+        Setup a bridge administration page to examine status of deployed parts and do redirections.
+      </p>
+      <p>Use pomstrap (http://pomstrap.jfluid.com) or Aether (http://www.sonatype.org/aether) to pickup dependencies.</p>
+    </section>
+  </body>
+  
+</document>
+

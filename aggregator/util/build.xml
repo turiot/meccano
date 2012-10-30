@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="parent" basedir=".">
+
+  <path id="plugin.classpath">
+    <path path="${plugin-classpath}"/>
+  </path>
+  <target name="test">
+    <!--echo message="plugin.classpath = ${plugin-classpath}"/-->
+    <echo message="${jdk.version}"/>
+  </target>
+  
+	<!-- ################ server management ################# -->
+
+  <property name="tomcat.home" value="/java/tomcat7"/>
+
+  <path id="tomcat.classpath">
+    <fileset dir="${tomcat.home}/bin" includes="*.jar"></fileset>
+    <fileset dir="${tomcat.home}/lib" includes="*.jar"></fileset>
+  </path>
+	
+  <target name="start">
+    <java classname="org.apache.catalina.startup.Bootstrap" classpathref="tomcat.classpath" fork="true" spawn="true">
+      <jvmarg value="-Dcatalina.home=${tomcat.home}"/>
+      <jvmarg value="-Dcatalina.base=${tomcat.home}"/>
+      <jvmarg value="-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"/>
+      <jvmarg value="-Djava.util.logging.config.file=${tomcat.home}/conf/logging.properties"/>
+      <jvmarg value="-Djava.io.tmpdir=${tomcat.home}/temp"/>
+    	<!--
+      <jvmarg value="-Xdebug"/>
+      <jvmarg value="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n"/>
+      -->
+      <arg value="start"/>
+    </java>
+  </target>
+  <target name="stop">
+    <java classname="org.apache.catalina.startup.Bootstrap" classpathref="tomcat.classpath" fork="true">
+      <jvmarg value="-Dcatalina.home=${tomcat.home}"/>
+      <arg value="stop"/>
+    </java>
+  </target>
+	
+  <taskdef resource="cargo.tasks"/>
+
+  <target name="deploy">
+    <cargo containerId="tomcat7x" action="redeploy" type="remote">
+      <configuration type="runtime">
+        <property name="cargo.hostname" value="localhost"/>
+        <property name="cargo.servlet.port" value="8080"/>
+        <property name="cargo.remote.username" value="admin"/>
+        <property name="cargo.remote.password" value="admin"/>
+        <deployable type="war" file="../bridge/bridge-web/target/bridge.war">
+          <property name="context" value="application-context"/>
+        </deployable>
+        <deployable type="war" file="../test1/test1-common/target/test1-common.war">
+          <property name="context" value="application-context"/>
+        </deployable>
+        <deployable type="war" file="../test1/test1-service/target/test1-service.war">
+          <property name="context" value="application-context"/>
+        </deployable>
+        <deployable type="war" file="../test1/test1-client/target/test1-client.war">
+          <property name="context" value="application-context"/>
+        </deployable>
+      </configuration>
+    </cargo>
+  </target>
+
+  <target name="deploy-one">
+    <cargo containerId="tomcat7x" action="redeploy" type="remote">
+      <configuration type="runtime">
+        <property name="cargo.hostname" value="localhost"/>
+        <property name="cargo.servlet.port" value="8080"/>
+        <property name="cargo.remote.username" value="admin"/>
+        <property name="cargo.remote.password" value="admin"/>
+        <deployable type="war" file="../test1/test1-client/target/test1-client.war">
+          <property name="context" value="application-context"/>
+        </deployable>
+      </configuration>
+    </cargo>
+  </target>
+
+  <!-- ################ code quality ################# -->
+	
+  <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"/>
+
+  <target name="findbugs">
+    <findbugs classpathref="plugin.classpath" 
+              effort="max" reportLevel="Low" includeFilter="findbugs-bugs.xml" maxRank="20" 
+              output="text" outputFile="target/findbugs.txt" sort="true" 
+              jvmargs="-Xms512M -Xmx512M ">
+      <sourcePath>
+        <fileset dir="../../bridge">
+          <include name="**/*.java"/>
+        </fileset>
+      </sourcePath>
+      <fileset dir="../../bridge">
+        <include name="**/*.class"/>
+      </fileset>
+    </findbugs>
+  </target>
+
+  <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"/>
+
+  <target name="pmd">
+    <pmd rulesetfiles="pmd-rulesets.xml" shortFilenames="true">
+      <formatter type="text" toFile="target/pmd.txt"/>
+      <fileset dir="../../bridge">
+        <include name="**/*.java"/>
+      </fileset>
+    </pmd>
+  </target>
+
+  <taskdef name="checkstyle" classname="com.puppycrawl.tools.checkstyle.CheckStyleTask"/>
+
+  <target name="checkstyle">
+    <checkstyle failOnViolation="false" config="checkstyle-checks.xml">
+      <formatter type="xml" tofile="target/checkstyle.xml"/>
+      <fileset dir="../../bridge">
+        <include name="**/*.java"/>
+      </fileset>
+    </checkstyle>
+    <xslt in="target/checkstyle.xml" out="target/checkstyle.txt" style="checkstyle-text.xsl"/>
+  </target>
+
+  <target name="quality" depends="findbugs,pmd,checkstyle"/>
+
+  <target name="tags" description="reports todo tags in comments">
+    <property name="fs.dir" value="../../bridge"/>
+    <property name="fs.includes" value="**/*.*"/>
+    <property name="fs.excludes" value="**/target/"/>
+    <property name="tags.out" value="target/tags.txt"/>
+    <script language="beanshell" setbeans="true"><![CDATA[
+      import java.io.*;
+      import java.util.Scanner;
+      import java.util.regex.Matcher;
+      import java.util.regex.Pattern;
+      pattern = Pattern.compile(".*(!--|//|/\\*\\*) (FIXME|TODO|NOTE).*");
+      project = self.getProject();
+      dir      = project.getProperty("fs.dir");
+      includes = project.getProperty("fs.includes");
+      excludes = project.getProperty("fs.excludes");
+      out      = project.getProperty("tags.out");
+      outstream = new FileWriter(out);
+      fs = project.createDataType("fileset");
+      fs.setDir(new File(dir) );
+      fs.setIncludes(includes);
+      fs.setExcludes(excludes);
+      ds = fs.getDirectoryScanner(project);
+      srcFiles = ds.getIncludedFiles();
+      for (i=0; i<srcFiles.length; i++) {
+        path = dir+'/'+srcFiles[i];
+        file = new File(path);
+        Scanner scanner = new Scanner(new FileInputStream(file));
+        int count = 1;
+        try {
+          while (scanner.hasNextLine()){
+            line = scanner.nextLine();
+            matcher = pattern.matcher(line);
+            if (matcher.matches()) {
+              outstream.write(path+' '+Integer.toString(count)+' '+line+'\n');
+            }
+            count++;
+          }
+        }
+        finally{
+          scanner.close();
+        }
+      }
+      outstream.close();
+    ]]></script>
+  </target>
+
+</project>

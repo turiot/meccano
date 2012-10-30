@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  
+  <body>
+    <section name="Modules">
+      <subsection name="bridge">
+        <p>This the main module of Meccano</p>
+        <ul>
+          <li>bridge-core contains the registries shared by all applications</li>
+          <li>bridge-tomcat contains the asynchronous listener and custom classloader implemented by applications</li>
+          <li>bridge-web is the application wich puts registries in the Tomcat shared path</li>
+        </ul>
+      </subsection>
+      <subsection name="tests">
+        <p>A few demonstration applications, composed of an api, and three applications : an api wrapper, a service and a client.</p>
+      </subsection>
+      <subsection name="integration">
+        <p>An integration test, able to download and start a Tomcat instance, deploy applications (bridge and test) and to check status and calling client.</p>
+      </subsection>
+      <subsection name="aggregator">
+        <p>A convenience maven aggregator to build submodules and launch integration tests.</p>
+      </subsection>
+      <subsection name="archetype">
+        <p>Four maven archetypes to ease the creation of a typical multi part application (api,wrapper,service and client).</p>
+      </subsection>
+    </section>
+    <section name="Artifacts">
+      <p>The artifacts will soon be avalaibles on github.</p>
+    </section>
+    <section name="How to">
+      <subsection name="Maven">
+        <p>We need maven 3 to build the project.</p>
+        <p>Be patient the first time, although we use minimal dependencies (serlet and cargo) maven will download several plugins, 
+           to create a few kilobytes wars : that's Java brewing :)
+        </p>
+      </subsection>
+      <subsection name="Building">
+        <p>Go to bridge-parent and issue the following command : mvn install</p>
+        <p>For future archetypes usage do the same thing in archetype module.</p>
+        <p>To build tests and launch integration tests, you can go to aggregator module, update settings.xml (for jdk version and tomcat home) and launch<br/>
+          mvn clean install verify -DskipTests=false -s settings.xml
+        </p>
+      </subsection>
+      <subsection name="Using archetype">
+        <p>The following cammond</p>
+        <p>
+          mvn archetype:generate -DarchetypeGroupId=meccano -DarchetypeArtifactId=archetype -DarchetypeVersion=1.0 -DgroupId=mygroup -DartifactId=myartifact -Dversion=1.0 -Dpackage=mypackage
+        </p>
+        <p>will create a maven project with 4 modules (api,common,client and service).</p>
+      </subsection>
+      <subsection name="Starting from scratch">
+        <p>Create an api module : service interface and business model classes used by service and client, packed as a jar.</p>
+        <p>Create a wrapper for deploying this api jar, using archetype or copying a test example : a simple web application
+           with an asynchronous listener (cf web.xml) and a meccano.properties containg the name of the api (this will refer the api jar
+           in the api registry).
+        </p>
+        <p>Create a web application for the service : service implementation, web.xml like previous one and in meccano.properties references 
+           to the needed api and the offered service (this will be used in the service registry).
+        </p>
+        <p>Create a web application for the client : client implementation, web.xml like previous one and in meccano.properties references 
+           to the needed api and need service.
+        </p>
+        <p>Deploy the bridge war and your 3 created wars and enjoy !</p>
+      </subsection>
+      <subsection name="Existing application">
+        <p>Extract interface and model into an api module (jar) from the original application.</p>
+        <p>Create a wrapper for deploying this api.</p>
+        <p>Create a service application.</p>
+        <p>Update original application to insert an asynchrnous listener, and configure it (api and and service needed) in meccano.properties.</p>
+        <p>Put possible original listeners into configuration as custom listners</p>
+      </subsection>
+    </section>
+  </body>
+  
+</document>
+

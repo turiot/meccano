@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  
+  <body>
+    <p>
+      The objective of this project is to create a tool allowing <b>modular</b> composition of <b>servlet</b> applications.
+    </p>
+    <p>
+      It should be possible to compose a application of multiple applications sharing a common model and acting as publishers or users
+      of services, with the natural Tomcat capability of deploying and reloading parts. A sort of poor man's OSGI for servlets.
+    </p>
+    <p>This could meet a need frequently expressed :<br/>
+      <a href="http://stackoverflow.com/questions/5394781/sharing-an-application-context-between-two-wars">http://stackoverflow.com/questions/5394781/sharing-an-application-context-between-two-wars</a><br/>
+      <a href="http://blog.springsource.com/2007/06/11/using-a-shared-parent-application-context-in-a-multi-war-spring-application/">http://blog.springsource.com/2007/06/11/using-a-shared-parent-application-context-in-a-multi-war-spring-application</a><br/>
+      <a href="http://springtips.blogspot.fr/2007/06/using-shared-parent-application-context.html">http://springtips.blogspot.fr/2007/06/using-shared-parent-application-context.html</a><br/>
+      <a href="http://forum.springsource.org/archive/index.php/t-46567.html">http://forum.springsource.org/archive/index.php/t-46567.html</a><br/>
+      <a href="https://forums.terracotta.org/forums/posts/list/907.page">https://forums.terracotta.org/forums/posts/list/907.page</a><br/>
+      <a href="http://www.linkedin.com/answers/technology/web-development/TCH_WDD/546205-5682790">http://www.linkedin.com/answers/technology/web-development/TCH_WDD/546205-5682790</a><br/>
+    </p>
+    <p>
+      Modularity is achieved by offering singleton services, redeployables, versionned along with shared interfaces.
+    </p>
+    <p>
+      Tomcat (or more precisely the servlet specification) is a good service container, all we need to add is communication between applications.
+      So we could assemble and reassemble applications like <b>Meccano</b> parts !
+    </p>
+    <center><img src="./images/diag.png"/></center>
+  </body>
+  
+</document>
+

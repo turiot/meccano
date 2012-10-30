@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-site</actionName>
+            <displayName>site</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>site</goal>
+                <goal>-pl</goal>
+                <goal>:bridge</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-site_all</actionName>
+            <displayName>site_all</displayName>
+            <goals>
+                <goal>site</goal>
+                <goal>site:stage</goal>
+                
+            </goals>
+        </action>
+    </actions>

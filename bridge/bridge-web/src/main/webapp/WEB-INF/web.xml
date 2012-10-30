@@ -1,0 +1,26 @@
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+  <display-name>meccano bridge</display-name>
+  
+  <context-param>
+     <param-name>meccano.mbname</param-name>
+     <param-value>bridge:name=bridge,type=ready</param-value>
+  </context-param>
+  
+  <listener>
+    <listener-class>meccano.bridge.web.BridgeContextListener</listener-class>
+  </listener>
+  
+  <servlet>
+  	<servlet-name>StatusServlet</servlet-name>
+  	<servlet-class>meccano.bridge.web.StatusServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>StatusServlet</servlet-name>
+  	<url-pattern>/status</url-pattern>
+  </servlet-mapping>
+  
+</web-app>

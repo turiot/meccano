@@ -1,0 +1,45 @@
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+  <display-name>test1 service v2</display-name>
+  
+  <context-param>
+     <param-name>meccano.mbname</param-name>
+     <param-value>bridge:name=bridge,type=ready</param-value>
+  </context-param>
+  <context-param>
+     <param-name>meccano.repeat</param-name>
+     <param-value>20</param-value>
+  </context-param>
+  <context-param>
+     <param-name>meccano.interval</param-name>
+     <param-value>1000</param-value>
+  </context-param>
+  
+  <filter>
+    <filter-name>StatusFilter</filter-name>
+    <filter-class>meccano.bridge.tomcat.StatusFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>StatusFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <listener>
+    <listener-class>meccano.bridge.tomcat.AsyncContextListener</listener-class>
+  </listener>
+  
+  <servlet>
+    <servlet-name>StatusServlet</servlet-name>
+    <servlet-class>meccano.bridge.tomcat.util.StatusServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>StatusServlet</servlet-name>
+    <url-pattern>/status</url-pattern>
+  </servlet-mapping>
+  
+</web-app>

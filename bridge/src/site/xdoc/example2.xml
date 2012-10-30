@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  
+  <body>
+    <p>
+      A jdbc service example (the caller doesn't have access to driver).
+    </p>
+    <p>
+      The caller use a service calling jdbc without having access himslef to the driver used by the callee.
+    </p>
+    <p>
+      Look at integration test.
+    </p>
+    <p>
+      Logs :
+    </p>
+    <source>
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Infos: starting tomcat
+Infos: ======= test dependencies (test2)
+Infos: wait for deploy and synchronization
+Infos: open http://localhost:8080/bridge/status code=200
+Infos: status bridge : ready
+Infos: open http://localhost:8080/test2-common/status code=200
+Infos: status test2-common : ready
+Infos: open http://localhost:8080/test2-service/status code=200
+Infos: status test2-service : ready
+Infos: open http://localhost:8080/test2-client/status code=200
+Infos: status test2-client : ready
+Infos: open http://localhost:8080/test2-client/ClientServlet code=200
+Infos: result  : jdbc ok + no classloader leak
+Infos: ------- resolution OK
+Infos: stopping tomcat
+
+-------------------------------------------------------
+ TOMCAT LOG
+-------------------------------------------------------
+Infos: Starting Servlet Engine: Apache Tomcat/7.0.23
+Infos: Déploiement de l'archive /java/tomcat7/cargo/webapps/test2-common.war de l'application web
+11:02:26.338 - Infos [test2 common] (meccano.bridge.tomcat.AsyncContextListener.contextInitialized) ------- starting
+11:02:26.353 - Infos [test2 common] (meccano.bridge.tomcat.CommandController.run) givenApi      test2-api-1.0
+11:02:26.354 - Infos [test2 common] (meccano.bridge.tomcat.CommandController.run) repeat        20
+11:02:26.354 - Infos [test2 common] (meccano.bridge.tomcat.CommandController.run) interval      1 000
+Infos: Déploiement de l'archive /java/tomcat7/cargo/webapps/test2-client.war de l'application web
+11:02:26.360 - Infos [test2 common] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:02:26.362 - Infos [test2 common] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:02:26.363 - Infos [test2 common] (meccano.bridge.tomcat.commands.WaitCommand.run) SLEEP
+11:02:26.397 - Infos [test2 client] (meccano.bridge.tomcat.AsyncContextListener.contextInitialized) ------- starting
+11:02:26.410 - Infos [test2 client] (meccano.bridge.tomcat.CommandController.run) neededApi     test2-api-1.0
+11:02:26.410 - Infos [test2 client] (meccano.bridge.tomcat.CommandController.run) neededService test2.service
+11:02:26.411 - Infos [test2 client] (meccano.bridge.tomcat.CommandController.run) repeat        20
+11:02:26.411 - Infos [test2 client] (meccano.bridge.tomcat.CommandController.run) interval      1 000
+Infos: Déploiement de l'archive /java/tomcat7/cargo/webapps/bridge.war de l'application web
+11:02:26.417 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:02:26.417 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:02:26.417 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) SLEEP
+Infos: ------- starting bridge
+Infos: ------- lib : bridge-core-1.0.jar
+Infos: ------- started bridge
+Infos: Déploiement de l'archive /java/tomcat7/cargo/webapps/test2-service.war de l'application web
+11:02:26.500 - Infos [test2 service] (meccano.bridge.tomcat.AsyncContextListener.contextInitialized) ------- starting
+11:02:26.513 - Infos [test2 service] (meccano.bridge.tomcat.CommandController.run) neededApi     test2-api-1.0
+11:02:26.513 - Infos [test2 service] (meccano.bridge.tomcat.CommandController.run) givenService  test2.service
+11:02:26.514 - Infos [test2 service] (meccano.bridge.tomcat.CommandController.run) givenClass    meccano.test2.service.Service
+11:02:26.516 - Infos [test2 service] (meccano.bridge.tomcat.CommandController.run) repeat        20
+11:02:26.516 - Infos [test2 service] (meccano.bridge.tomcat.CommandController.run) interval      1 000
+11:02:26.521 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:02:26.521 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:02:26.521 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+11:02:26.521 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:02:26.525 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitApiCommand.init) ------- need api test2-api-1.0
+11:02:26.525 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:02:26.527 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitCommand.run) SLEEP
+11:02:27.366 - Infos [test2 common] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:02:27.367 - Infos [test2 common] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+11:02:27.370 - Infos [test2 common] (meccano.bridge.tomcat.commands.SetApiCommand.run) ------- give api /java/tomcat7/cargo/temp/0-test2-common/WEB-INF/lib/test2-api-1.0.jar
+Infos: *** add test2-api-1.0
+11:02:27.374 - Infos [test2 common] (meccano.bridge.tomcat.commands.SetApiCommand.run) end set api
+11:02:27.417 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:02:27.418 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+11:02:27.418 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:02:27.421 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitApiCommand.init) ------- need api test2-api-1.0
+11:02:27.421 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:02:27.424 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitApiCommand.test) ------- got cl for test2-api-1.0
+11:02:27.425 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitApiCommand.test) ------- added cl for test2-api-1.0
+11:02:27.425 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+11:02:27.425 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:02:27.430 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitServiceCommand.init) ------- need service test2.service
+11:02:27.430 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:02:27.433 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) SLEEP
+11:02:27.528 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:02:27.528 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitApiCommand.test) ------- got cl for test2-api-1.0
+11:02:27.529 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitApiCommand.test) ------- added cl for test2-api-1.0
+11:02:27.529 - Infos [test2 service] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+11:02:27.539 - Infos [test2 service] (meccano.bridge.tomcat.commands.SetServiceCommand.run) ------- added service test2.service (meccano.test2.service.Service)
+11:02:28.433 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:02:28.433 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitServiceCommand.test) ------- got service test2.service
+11:02:28.433 - Infos [test2 client] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+oct. 21, 2012 11:02:40 PM meccano.test2.service.Service test
+Infos: service called
+Infos: ------- ending bridge
+Infos: ------- end bridge
+    </source>
+  </body>
+  
+</document>
+

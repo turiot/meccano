@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <prerequisites>
+    <maven>3.0.4</maven>
+  </prerequisites>
+
+  <groupId>meccano</groupId>
+  <artifactId>test3</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+  <name>test3 parent</name>
+
+  <modules>
+    <module>test3-api</module>
+    <module>test3-common</module>
+    <module>test3-service</module>
+    <module>test3-client</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>meccano</groupId>
+        <artifactId>bridge-core</artifactId>
+        <version>LATEST</version>
+      </dependency>
+      <dependency>
+        <groupId>meccano</groupId>
+        <artifactId>bridge-tomcat</artifactId>
+        <version>LATEST</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <source>1.5</source>
+          <target>${jdk.version}</target>
+          <compilerArgument>-Xlint:all</compilerArgument>
+          <showWarnings>true</showWarnings>
+          <showDeprecation>true</showDeprecation>
+          <fork>${jdk.fork}</fork>
+          <executable>${jdk.home}/bin/javac</executable>
+          <compilerVersion>${jdk.version}</compilerVersion>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jdk.version>${java.specification.version}</jdk.version>
+    <jdk.fork>false</jdk.fork>
+    <jdk.home>${java.home}</jdk.home>
+  </properties>
+  
+</project>

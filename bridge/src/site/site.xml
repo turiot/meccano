@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Maven" xmlns="http://maven.apache.org/DECORATION/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+  <bannerLeft>
+    <name>Meccano</name>
+    <src>images/meccano.png</src>
+    <href>/index.html</href>
+    <title>ask for copyright to Meccano inc</title>
+  </bannerLeft>
+  <bannerRight>
+    <name>Modular Servlet Applications</name>
+  </bannerRight>
+  <body>
+    <links>
+      <item name="Github" href="https://github.com/turiot/meccano" />
+      <item name="Blog" href="http://java.orfanik.com/"/>
+      <item name="Tribute" href="http://www.meccano.com/la-marque/histoire.html"/>
+    </links>
+    <menu name="Meccano">
+      <item name="Purpose" href="index.html"/>
+      <item name="Technic" href="implementation.html"/>
+      <item name="Examples" href="examples.html" collapse="true">
+        <item name="Example 1" href="example1.html"/>
+        <item name="Example 2" href="example2.html"/>
+        <item name="Example 3" href="example3.html"/>
+      </item>
+      <item name="Hands on" href="handson.html"/>
+      <item name="Todo" href="todo.html"/>
+      <item name="Afterword" href="afterword.html"/>
+    </menu>
+    <menu ref="modules"/>
+    <menu ref="reports"/>
+    <footer></footer>
+  </body>
+  <!--skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>1.3.0</version>
+  </skin-->
+</project>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <prerequisites>
+    <maven>3.0.4</maven>
+  </prerequisites>
+
+  <groupId>meccano</groupId>
+  <artifactId>bridge</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+  <name>bridge parent</name>
+  
+  <modules>
+    <module>bridge-core</module>
+    <module>bridge-tomcat</module>
+    <module>bridge-web</module>
+  </modules>
+  
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>meccano</groupId>
+        <artifactId>bridge-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>meccano</groupId>
+        <artifactId>bridge-tomcat</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>meccano</groupId>
+        <artifactId>bridge-web</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <source>1.5</source>
+          <target>${jdk.version}</target>
+          <compilerArgument>-Xlint:all</compilerArgument>
+          <showWarnings>true</showWarnings>
+          <showDeprecation>true</showDeprecation>
+          <fork>${jdk.fork}</fork>
+          <executable>${jdk.home}/bin/javac</executable>
+          <compilerVersion>${jdk.version}</compilerVersion>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <reportPlugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+              <version>2.2</version>
+              <reports>
+                <report>summary</report>
+                <report>license</report>
+                <report>project-team</report>
+                <report>dependencies</report>
+                <report>scm</report>
+                <report>issue-tracking</report>
+                <report>plugin-management</report>
+                <report>plugins</report>
+                <!--report>index</report-->
+                <!--report>modules</report-->
+                <!--report>mailing-list</report-->
+                <!--report>cim</report-->
+              </reports>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>findbugs-maven-plugin</artifactId>
+              <version>2.5.2</version>
+              <configuration>
+                <effort>Max</effort>
+                <threshold>Low</threshold>
+                <includeTests>false</includeTests>
+                <xmlOutput>true</xmlOutput>
+                <failOnError>false</failOnError>
+                <fork>true</fork>
+                <skip>false</skip>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-pmd-plugin</artifactId>
+              <version>2.7.1</version>
+              <configuration>
+                <targetJdk>1.5</targetJdk>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-checkstyle-plugin</artifactId>
+              <version>2.9.1</version>
+              <configuration>
+                <configLocation>src/site/checkstyle-checks.xml</configLocation>
+                <enableFilesSummary>false</enableFilesSummary>
+                <enableRSS>false</enableRSS>
+                <enableRulesSummary>false</enableRulesSummary>
+                <skip>true</skip>
+              </configuration>
+            </plugin>
+          </reportPlugins>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+    <site>
+      <id>default.cli</id>
+      <url>file://mock</url>
+    </site>
+  </distributionManagement>
+  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jdk.fork>false</jdk.fork>
+    <jdk.version>${java.specification.version}</jdk.version>
+    <jdk.home>${java.home}</jdk.home>
+  </properties>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>turiot</id>
+      <name>Thierry Uriot</name>
+      <email>java@orfanik.com</email>
+    </developer>
+  </developers>
+  <scm>
+  	<connection>scm:git:git@github.com:turiot/meccano.git</connection>
+	  <url>scm:git:git@github.com:turiot/meccano.git</url>
+	  <developerConnection>scm:git:git@github.com:turiot/meccano.git</developerConnection>
+  </scm>  
+  <issueManagement>
+    <system>GitHub</system>
+    <url></url>
+  </issueManagement>
+
+</project>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  
+  <body>
+    
+    <section name="Problems">
+      <p>
+        Storing services instances in a registry and access them with a Service Locator is a well know pattern, but in the servlet case we face 3 problems :
+      </p>
+      <ul>
+        <li>
+          Class loader isolation (wich is an specification for the servlet container)
+        </li>
+        <li>
+          Synchronisation : the order the applications start is not deterministic
+        </li>
+        <li>
+          Sharing singleton registries in a non instrusive way
+        </li>
+      </ul>
+    </section>
+    
+    <section name="Solutions">
+      <subsection name="Classloader hierarchy interception">
+        <p>
+          Each api is registered as a new classloader in the registery.
+          The applications classloader adds a lookup in this classloader before proceeding the normal lookup (webapp then shared).
+        </p>
+      </subsection>
+        
+      <subsection name="Asynchronous listeners">
+        <p>
+          In order to wait for dependant parts, the application start launches a thread waiting for components.
+          A sequence of optional commands is executed : wait for the bridge, wait for api's appearing in the api registry, wait for services in the service
+          registry, adding api's in the registry, adding services.
+          Parts become available as the sequence goes along.
+          At the end a status is set, opening access to the application is every steps ran fine.
+        </p>
+      </subsection>
+        
+      <subsection name="MBean server">
+        <p>
+          Instead of putting registries in the shared Tomcat path, wich suppose access to the configuration, an application (the bridge) does this 
+          job, giving registries availables to other parts.
+          The Tomcat MBean server is used, via a status MBean to notify dependant applications that the bridge (the singleton registries in fact)
+          is set.
+        </p>
+      </subsection>
+    </section>
+    
+    <section name="Implementation">
+      <p>
+        <strong>Component view :</strong>
+      </p>
+      <img src="./images/comp.png" alt="Component"></img>
+      <p>
+        Core module brings registries (lazy singletons) via web wrapper;<br/>
+        Tomcat module setup custom asynchronous listener (with commands) and CompositeLoder;<br/>
+        A final application is mainly business classes and configuration (cf examples).
+      </p>
+      <p>
+        <strong>Class view :</strong>
+      </p>
+      <img src="./images/classes.png" alt="Classes"></img>
+      <p>
+        Not illustrated here are the web context to store status and so on, and the MBean server used by BridgeStatus and WaitBridgeCommand.<br/>
+        The CompositeLoader is inserted before WebappLoader to lookup in api registry before normal lookup.
+      </p>
+      <p>
+        <strong>Activity view :</strong>
+      </p>
+      <img src="./images/act.png" alt="Activity"></img>
+      <p>
+        The commands sequence ensure synchronisation.
+      </p>
+      <p>
+        <strong>Sequence diagrams :</strong>
+      </p>
+      <img src="./images/seq2.png" alt="Sequence2"></img>
+      <img src="./images/seq.png" alt="Sequence"></img>
+      <p>
+        An executor is used to ease the shutdown of a failed application and for a future server level management
+      </p>
+    </section>
+    
+    <section name="Notes">
+      <p>
+        We can't use JNDI + transloader (http://code.google.com/p/transloader/) as Tomcat's JNDI is read only; neither common libs as they can't be dynamically refreshed.
+      </p>
+      <p>
+        The code is intentionally 1.5 compatible and could be more elegant using 1.7 features.
+      </p>
+    </section>
+  </body>
+  
+</document>

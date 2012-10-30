@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>meccano</groupId>
+  <artifactId>util</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+  <name>meccano</name>
+
+  <modules>
+    <module>../../bridge</module>
+    <module>../../test1</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <!-- 
+        mvn -f util.xml antrun:run -Dtarget=quality -pl :aggregator
+        mvn -f util.xml antrun:run -Dtarget=tags -pl :aggregator
+        mvn -f util.xml antrun:run -Dtarget=deploy -pl :aggregator 
+      -->
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions> 
+          <execution>
+            <id>default-cli</id>
+            <configuration>
+              <target>
+                <property name="plugin-classpath" refid="maven.plugin.classpath"/>
+                <ant antfile="${basedir}/build.xml" inheritRefs="true">
+                  <target name="${target}"/>
+                </ant>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-ant</artifactId>
+            <version>1.2.3</version>
+          </dependency>
+          <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>findbugs-ant</artifactId>
+            <version>2.0.1</version>
+          </dependency>
+          <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>findbugs</artifactId>
+            <version>2.0.1</version>
+          </dependency>
+          <dependency>
+            <!--groupId>pmd</groupId>
+            <artifactId>pmd</artifactId>
+            <version>4.3</version-->
+            <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd</artifactId>
+            <version>5.0.0</version>
+            <exclusions>
+              <exclusion>
+                <groupId>ant</groupId>
+                <artifactId>ant</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+          <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.3.04</version>
+          </dependency>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>5.4</version>
+          </dependency>
+          <dependency>
+            <groupId>org.beanshell</groupId>
+            <artifactId>bsh</artifactId>
+            <version>2.0b5</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <!-- mvn versions:set -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>1.3.1</version>
+        <configuration>
+          <groupId>meccano</groupId>
+          <artifactId>bridge</artifactId>
+          <newVersion>1.0</newVersion>
+          <generateBackupPoms>false</generateBackupPoms>
+          <allowSnapshots>false</allowSnapshots>
+        </configuration>
+      </plugin>
+      <!-- mvn build-helper:remove-project-artifact -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
+        <configuration>
+          <failOnError>false</failOnError>
+          <removeAll>false</removeAll>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

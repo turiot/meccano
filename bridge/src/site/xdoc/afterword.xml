@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  
+  <body>
+    <p>
+      This tool doesn't intent to rival EJB or OSGI, it brings only modularity to servlet based applications while others brings many more.
+    </p>
+    <p>
+      However if offers local call with classloading sharing that EJB spec lacks, and is less coercing then OSGI.
+    </p>
+    <p>
+      Not every developper have the chance to work on new applications using latest technology and those doing
+      maintenance on simple web applications will appreciate having this instrument in their toolbelt.
+    </p>
+    <p>
+      Futhermore it is a great satisfaction to accomplish what many others judged impossible !
+    </p>
+  </body>
+  
+</document>
+

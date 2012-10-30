@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  
+  <body>
+    <p>
+      A Spring 2 application calling a service from a Spring 3 container.
+    </p>
+    <p>
+      The caller is instantiated by a Spring 2 container and calls a service created by a Spring 3 container (taking advantage for instange of Spring EL).
+    </p>
+    <p>
+      Look at integration test.
+    </p>
+    <p>
+      Logs :
+    </p>
+    <source>
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Infos: starting tomcat
+Infos: ======= test spring (test3)
+Infos: wait for deploy and synchronization
+Infos: open http://localhost:8080/bridge/status code=200
+Infos: status bridge : ready
+Infos: open http://localhost:8080/test3-common/status code=200
+Infos: status test3-common : ready
+Infos: open http://localhost:8080/test3-service/status code=200
+Infos: status test3-service : ready
+Infos: open http://localhost:8080/test3-client/status code=200
+Infos: status test3-client : ready
+Infos: open http://localhost:8080/test3-client/ClientServlet code=200
+Infos: result  : service called by titi
+Infos: ------- spring 2 calling spring 3 OK
+Infos: stopping tomcat
+      
+-------------------------------------------------------
+ TOMCAT LOG
+-------------------------------------------------------
+Infos: Starting Servlet Engine: Apache Tomcat/7.0.23
+Infos: Déploiement de l'archive /java/tomcat7/cargo/webapps/cargocpc.war de l'application web
+Infos: Déploiement de l'archive /java/tomcat7/cargo/webapps/test3-common.war de l'application web
+11:39:00.615 - Infos [test3 common] (meccano.bridge.tomcat.AsyncContextListener.contextInitialized) ------- starting
+11:39:00.630 - Infos [test3 common] (meccano.bridge.tomcat.CommandController.run) givenApi      test3-api-1.0
+11:39:00.630 - Infos [test3 common] (meccano.bridge.tomcat.CommandController.run) repeat        20
+11:39:00.631 - Infos [test3 common] (meccano.bridge.tomcat.CommandController.run) interval      1 000
+Infos: Déploiement de l'archive /java/tomcat7/cargo/webapps/test3-client.war de l'application web
+11:39:00.639 - Infos [test3 common] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:39:00.639 - Infos [test3 common] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:39:00.640 - Infos [test3 common] (meccano.bridge.tomcat.commands.WaitCommand.run) SLEEP
+11:39:00.714 - Infos [test3 client] (meccano.bridge.tomcat.AsyncContextListener.contextInitialized) ------- starting
+11:39:00.719 - Infos [test3 client] (meccano.bridge.tomcat.CommandController.run) neededApi     test3-api-1.0
+11:39:00.719 - Infos [test3 client] (meccano.bridge.tomcat.CommandController.run) neededService test3.service
+11:39:00.723 - Infos [test3 client] (meccano.bridge.tomcat.CommandController.run) repeat        20
+11:39:00.724 - Infos [test3 client] (meccano.bridge.tomcat.CommandController.run) interval      1 000
+11:39:00.735 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:39:00.736 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:39:00.736 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) SLEEP
+Infos: Initializing Spring root WebApplicationContext
+Infos: Déploiement de l'archive /java/tomcat7/cargo/webapps/test3-service.war de l'application web
+11:39:01.085 - Infos [test3 service] (meccano.bridge.tomcat.AsyncContextListener.contextInitialized) ------- starting
+11:39:01.089 - Infos [test3 service] (meccano.bridge.tomcat.CommandController.run) neededApi     test3-api-1.0
+11:39:01.099 - Infos [test3 service] (meccano.bridge.tomcat.CommandController.run) repeat        20
+11:39:01.099 - Infos [test3 service] (meccano.bridge.tomcat.CommandController.run) interval      1 000
+11:39:01.099 - Infos [test3 service] (meccano.bridge.tomcat.CommandController.run) customListener meccano.test3.service.InstantiateListener
+Infos: Déploiement de l'archive /java/tomcat7/cargo/webapps/bridge.war de l'application web
+11:39:01.110 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:39:01.111 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:39:01.111 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitCommand.run) SLEEP
+Infos: ------- starting bridge
+Infos: ------- lib : bridge-core-1.0.jar
+Infos: ------- started bridge
+11:39:01.640 - Infos [test3 common] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:39:01.640 - Infos [test3 common] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+11:39:01.646 - Infos [test3 common] (meccano.bridge.tomcat.commands.SetApiCommand.run) ------- give api /java/tomcat7/cargo/temp/0-test3-common/WEB-INF/lib/test3-api-1.0.jar
+11:39:01.649 - Infos [test3 common] (meccano.bridge.tomcat.commands.SetApiCommand.run) end set api
+11:39:01.737 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:39:01.737 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+11:39:01.737 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:39:01.741 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitApiCommand.init) ------- need api test3-api-1.0
+11:39:01.741 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:39:01.745 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitApiCommand.test) ------- got cl for test3-api-1.0
+11:39:01.745 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitApiCommand.test) ------- added cl for test3-api-1.0
+11:39:01.746 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+11:39:01.746 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:39:01.751 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitServiceCommand.init) ------- need service test3.service
+11:39:01.751 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:39:01.754 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) SLEEP
+11:39:02.112 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:39:02.112 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+11:39:02.112 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitCommand.run) INIT
+11:39:02.115 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitApiCommand.init) ------- need api test3-api-1.0
+11:39:02.115 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:39:02.118 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitApiCommand.test) ------- got cl for test3-api-1.0
+11:39:02.119 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitApiCommand.test) ------- added cl for test3-api-1.0
+11:39:02.119 - Infos [test3 service] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+11:39:02.119 - Infos [test3 service] (meccano.bridge.tomcat.commands.RunListenersCommand.run) ------- run listener meccano.test3.service.InstantiateListener 
+oct. 21, 2012 11:39:02 PM meccano.test3.service.InstantiateListener contextInitialized
+Infos: ------- starting applicaton
+Infos: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1924be5: defining beans [service]; root of factory hierarchy
+11:39:02.754 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) TEST
+11:39:02.754 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitServiceCommand.test) ------- got service test3.service
+11:39:02.754 - Infos [test3 client] (meccano.bridge.tomcat.commands.WaitCommand.run) OK
+oct. 21, 2012 11:39:14 PM meccano.test3.service.Service test
+Infos: service called by titi
+Infos: ------- ending bridge
+Infos: ------- end bridge
+Infos: Closing Spring root WebApplicationContext
+Infos: Closing org.springframework.web.context.support.XmlWebApplicationContext@180f504: display name [Root WebApplicationContext]; startup date [Sun Oct 21 23:39:00 CEST 2012]; root of context hierarchy
+Infos: Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@ecc7c4: defining beans [ClientServlet]; root of factory hierarchy
+11:39:15.308 - Infos [test3 service] (meccano.bridge.tomcat.AsyncContextListener.contextDestroyed) ------- run end listener meccano.test3.service.InstantiateListener 
+    </source>
+  </body>
+  
+</document>
+
