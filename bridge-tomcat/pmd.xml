@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.3" timestamp="2012-10-30T21:17:15.414">
+<pmd version="4.3" timestamp="2012-11-01T12:05:03.680">
 <file name="/data/projects/meccanoII/bridge/bridge-tomcat/src/main/java/meccano/bridge/tomcat/CommandController.java">
 <violation beginline="68" endline="70" begincolumn="11" endcolumn="11" rule="EmptyCatchBlock" ruleset="Basic Rules" package="meccano.bridge.tomcat" class="CommandController" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
 Avoid empty catch blocks
