@@ -20,4 +20,12 @@
                 <goal>-DskipTests=false</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-deploy_to_github</actionName>
+            <displayName>deploy_to_github</displayName>
+            <goals>
+                <goal>deploy</goal>
+                <goal>-DaltDeploymentRepository=id::default::file:../../mavenrepo/releases</goal>
+            </goals>
+        </action>
     </actions>

@@ -127,6 +127,7 @@
           <repositoryName>meccano</repositoryName>
           <outputDirectory>${project.build.directory}/staging</outputDirectory>
           <merge>false</merge>
+          <force>true</force>
         </configuration>
       </plugin>
     </plugins>

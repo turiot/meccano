@@ -30,7 +30,18 @@
       </subsection>
     </section>
     <section name="Artifacts">
-      <p>The artifacts will soon be avalaibles on github.</p>
+      <p>The artifacts can be found on my Github repository.</p>
+      <p>Add this to your pom :</p>
+      <source>
+        <![CDATA[ 
+          <repositories>
+            <repository>
+              <id>turiot</id>
+              <url>https://github.com/turiot/mavenrepo/raw/master/releases</url>
+            </repository>
+          </repositories>
+        ]]>
+      </source>
     </section>
     <section name="How to">
       <subsection name="Maven">
