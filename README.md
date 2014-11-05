@@ -11,4 +11,3 @@ Tomcat (or more precisely the servlet specification) is a good service container
 ![alt text](http://turiot.github.com/meccano/images/diag.png)
 
 [See project documentation](http://orfanik.com/meccano)
-
